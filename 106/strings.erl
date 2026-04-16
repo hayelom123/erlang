@@ -32,7 +32,7 @@ concat(Str1, Str2) ->
 % substring/1, substring/2, substring/3 
 % you can just use sublist/1, sublist/2, sublist/3 from lists module but we will create our own for demonstration
 substring(Str) ->
-    lists:sublist(Str). 
+    lists:sublist(Str,length(Str)).
 substring(Str, Start) ->
     lists:sublist(Str, Start). 
 substring(Str, Start , Length) ->
