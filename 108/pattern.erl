@@ -8,7 +8,7 @@
 % Pattern matching can also be used to extract values from data structures. For example, you can match a tuple against a pattern to extract its elements.
 % Pattern matching is a fundamental concept in Erlang and is used extensively in the language to write concise and efficient code.
 
--export([greet/2, sum/1, same/2]).
+-export([greet/2, sum/1, same/2, valid_time/1]).
 
 greet(male, Name) ->
     io:format("Hello, Mr. ~s!~n", [Name]);
@@ -25,3 +25,9 @@ same(X, X) ->
     true;
 same(_, _) ->
     false.
+
+valid_time({Date = {Y, M, D}, Time = {H, Min, S}}) ->
+    io:format("The Date tuple (~p) says today is: ~p/~p/~p,~n", [Date, Y, M, D]),
+    io:format("The time tuple (~p) indicates: ~p:~p:~p.~n", [Time, H, Min, S]);
+valid_time(_) ->
+    io:format("Stop feeding me wrong data!~n").
