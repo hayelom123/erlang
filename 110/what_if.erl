@@ -1,5 +1,5 @@
 -module(what_if).
--export([works_fine/1, help_me/1]).
+-export([works_fine/1, help_me/1, is_positive/1]).
 
 % about if statements in erlang
 % Erlang does not have traditional if statements like other programming languages.
@@ -30,3 +30,12 @@ help_me(Animal) ->
                 "I don't know that animal."
         end,
     io:format("The ~p says: ~p~n", [Animal, Talk]).
+% true is like else in other languages, it will match any value that hasn't been matched by the previous conditions.
+% but to make it more clear, you can cover all the cases by using a guard like this:
+is_positive(N) ->
+    if
+        N > 0 ->
+            true;
+        N < 0 ->
+            false
+    end.
