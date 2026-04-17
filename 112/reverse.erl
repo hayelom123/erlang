@@ -1,5 +1,5 @@
 -module(reverse).
--export([reverse/1, ef_reverse/1]).
+-export([reverse/1, ef_reverse/1, sublist/2, ef_sublist/2]).
 
 reverse([]) -> [];
 reverse([H | T]) -> reverse(T) ++ [H].
@@ -13,3 +13,16 @@ reverse([H | T]) -> reverse(T) ++ [H].
 ef_reverse(List) -> ef_reverse(List, []).
 ef_reverse([], Acc) -> Acc;
 ef_reverse([H | T], Acc) -> ef_reverse(T, [H | Acc]).
+
+sublist(_, 0) -> [];
+sublist([], _) -> [];
+sublist([H | T], N) -> [H | sublist(T, N - 1)].
+
+% [1,2,3,4]. -> [1,2,3]
+
+% let's make it efficient by using an accumulator
+
+ef_sublist(L, N) -> ef_sublist(L, N, []).
+ef_sublist(_, 0, Acc) -> Acc;
+ef_sublist([], _, Acc) -> Acc;
+ef_sublist([H | T], N, Acc) -> ef_sublist(T, N - 1, [H | Acc]).
