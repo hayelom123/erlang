@@ -22,7 +22,7 @@ sublist([H | T], N) -> [H | sublist(T, N - 1)].
 
 % let's make it efficient by using an accumulator
 
-ef_sublist(L, N) -> ef_sublist(L, N, []).
+ef_sublist(L, N) -> ef_reverse(ef_sublist(L, N, [])).
 ef_sublist(_, 0, Acc) -> Acc;
 ef_sublist([], _, Acc) -> Acc;
 ef_sublist([H | T], N, Acc) -> ef_sublist(T, N - 1, [H | Acc]).
