@@ -50,7 +50,9 @@ exits(F) ->
     try F() of
         _ -> ok
     catch
-        exit:Exit -> {exit, caught, Exit}
+        exit:Exit -> {exit, caught, Exit};
+        error:Error -> {error, caught, Error};
+        throw:Value -> {throw, caught, Value}
     end.
 
 sword(1) -> throw(slice);
