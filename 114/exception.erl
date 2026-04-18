@@ -1,5 +1,5 @@
 -module(exception).
--export([divide/2]).
+-export([divide/2, errors/1, exits/1]).
 
 % In Erlang, exceptions are used to handle errors and unexpected situations in a controlled manner.
 % When an exception occurs, the normal flow of the program is interrupted, and the control is
@@ -38,4 +38,17 @@ divide(X, Y) ->
         error:badarith ->
             io:format("Cannot divide by zero~n"),
             undefined
+    end.
+
+errors(F) ->
+    try F() of
+        _ -> ok
+    catch
+        error:Error -> {error, caught, Error}
+    end.
+exits(F) ->
+    try F() of
+        _ -> ok
+    catch
+        exit:Exit -> {exit, caught, Exit}
     end.
