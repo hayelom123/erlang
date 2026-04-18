@@ -115,6 +115,9 @@ calculate() ->
     ],
     Deposit = [
         1052378,
+        100000,
+        240000,
+        % 210000,
         1117640,
         19635,
         560000,
@@ -122,7 +125,52 @@ calculate() ->
     ],
     Totalorder = sum(Order),
     TotalDeposit = sum(Deposit),
+    io:format("=====================Bereket==========================~n", []),
     io:format("Total Order:~p~n", [Totalorder]),
     io:format("Total Deposit:~p~n", [TotalDeposit]),
     CurrentBalance = TotalDeposit - Totalorder,
-    io:format("Current Balance:~p~n", [CurrentBalance]).
+    io:format("Current Balance:~p~n", [CurrentBalance]),
+    io:format("~n~n", []),
+
+    io:format("=========================Esayas===========================~n", []),
+    EsuOrder = [
+        % 1
+        376000,
+        % 2
+        17500,
+        % 3
+        17500,
+        % 4
+        17300,
+        % 5
+        201250,
+        % 6
+        4000,
+        % 7
+        50000,
+        % 8
+        31500,
+        % 9
+        0,
+        % 10
+        8750,
+        % 11
+        26250,
+        % 12
+        8750,
+        % 13
+        22500,
+        % 14
+        50000
+    ],
+    EsuDeposit = [
+        -82944,
+        300000,
+        242500
+    ],
+    TotalEsuOrder = sum(EsuOrder),
+    TotalEsuDeposit = sum(EsuDeposit),
+    io:format("Total Order:~p~n", [TotalEsuOrder]),
+    io:format("Total Deposit:~p~n", [TotalEsuDeposit]),
+    EsuCurrentBalance = TotalEsuDeposit - TotalEsuOrder,
+    io:format("Current Balance:~p~n", [EsuCurrentBalance]).
