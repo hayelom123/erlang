@@ -1,5 +1,5 @@
 -module(exception).
--export([divide/2, errors/1, exits/1, sword/1, black_knight/1, talk/0]).
+-export([divide/2, errors/1, exits/1, sword/1, black_knight/1, talk/0, whoa/0]).
 
 % In Erlang, exceptions are used to handle errors and unexpected situations in a controlled manner.
 % When an exception occurs, the normal flow of the program is interrupted, and the control is
@@ -72,3 +72,55 @@ black_knight(Attack) when is_function(Attack, 0) ->
     end.
 
 talk() -> "blah blah".
+
+% after clause is used to specify code that should be executed regardless of whether an exception occurred or not.
+% try Expression of
+%       Pattern -> Expr1
+% catch
+%       Type:Exception -> Expr2
+% after
+%       Expr3
+% end
+% similar to finally in other programming languages. It is used to ensure that certain code is executed even if an exception occurs.
+% For example, you might want to close a file or release a resource regardless of whether an error occurred or not.
+% However, you cannot get any return value out of the after construct.
+% Therefore, after is mostly used to run code with side effects. The canonical
+% use of this approach is when you want to make sure a file you were reading
+% gets closed, whether or not exceptions were raised.
+
+% Trying Multiple Expressions
+% You can also try multiple expressions in a single try block. In this case, the after clause will be executed after all the expressions have been evaluated, regardless of whether an exception occurred in any of them or not.
+% try
+%     Expression1,
+%     Expression2,
+%     Expression3
+% catch
+%     Type:Exception -> Expr2
+% after
+%     Expr3
+% end
+%  Trying Multiple Expressions with of
+% try
+%     Expression1,
+%     Expression2,
+%     Expression3
+% of
+%     Pattern1 -> Expr1;
+%     Pattern2 -> Expr2
+% catch
+%     Type:Exception -> Expr3
+% after
+%     Expr4
+% end
+whoa() ->
+    try
+        talk(),
+        _Knight = "None shall pass!",
+        _Doubles = [N * 2 || N <- lists:seq(1, 100)],
+        throw(up),
+        _WillReturnThis = tequila
+    of
+        tequila -> "Hey, this worked!"
+    catch
+        Exception:Reason -> {caught, Exception, Reason}
+    end.
