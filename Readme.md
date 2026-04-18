@@ -17,8 +17,34 @@ erl -noshell -s chat_server start -s init stop
 Meaning:
 
 -noshell → no interactive shell
+
 -s chat_server start → call chat_server:start()
+
 -s init stop → shutdown VM after execution
+
+🧩 Example
+
+Module:
+
+```
+-module(chat_server).
+
+-export([start/0]).
+
+start() ->
+io:format("Server started~n").
+```
+
+Run:
+
+```
+erlc chat_server.erl
+erl -noshell -s chat_server start -s init stop
+```
+
+Output:
+
+Server started
 
 compile
 
