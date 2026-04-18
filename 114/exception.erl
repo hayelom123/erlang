@@ -1,5 +1,5 @@
 -module(exception).
--export([divide/2, errors/1, exits/1, sword/1, black_knight/1]).
+-export([divide/2, errors/1, exits/1, sword/1, black_knight/1, talk/0]).
 
 % In Erlang, exceptions are used to handle errors and unexpected situations in a controlled manner.
 % When an exception occurs, the normal flow of the program is interrupted, and the control is
@@ -70,3 +70,5 @@ black_knight(Attack) when is_function(Attack, 0) ->
         exit:cut_leg -> "Come on you pansy!";
         _:_ -> "Just a flesh wound."
     end.
+
+talk() -> "blah blah".
