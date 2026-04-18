@@ -1,5 +1,5 @@
 -module(exception).
--export([divide/2, errors/1, exits/1, sword/1, black_knight/1, talk/0, whoa/0]).
+-export([divide/2, errors/1, exits/1, sword/1, black_knight/1, talk/0, whoa/0, im_impressed/0]).
 
 % In Erlang, exceptions are used to handle errors and unexpected situations in a controlled manner.
 % When an exception occurs, the normal flow of the program is interrupted, and the control is
@@ -121,6 +121,17 @@ whoa() ->
         _WillReturnThis = tequila
     of
         tequila -> "Hey, this worked!"
+    catch
+        Exception:Reason -> {caught, Exception, Reason}
+    end.
+
+im_impressed() ->
+    try
+        talk(),
+        _Knight = "None shall pass!",
+        _Doubles = [N * 2 || N <- lists:seq(1, 100)],
+        throw(up),
+        _WillReturnThis = _Doubles
     catch
         Exception:Reason -> {caught, Exception, Reason}
     end.
