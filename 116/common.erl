@@ -25,4 +25,12 @@ create_robot() ->
 
 send_message(Sender, Receiver, Content) ->
     Message = #message{sender = Sender, receiver = Receiver, content = Content},
-    io:format("Message sent: ~p\n", [Message]).
+    io:format("Message sent: ~p\n", [Message]),
+    #message{sender = Sender, receiver = Receiver, content = Content} = Message,
+    #message{receiver = Receiver1} = Message,
+    io:format("Message details - Sender: ~p, Receiver: ~p, Content: ~p\n", [
+        Sender, Receiver, Content
+    ]),
+    Sender1 = Message#message.sender,
+    io:format("Message details using pattern matching - Sender: ~p\n", [Sender1]),
+    io:format("Message details using pattern matching - Receiver: ~p\n", [Receiver1]).
