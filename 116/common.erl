@@ -1,5 +1,5 @@
 -module(common).
-
+-include("records.hrl").
 -export([
     first_robot/0,
     create_robot/0,
@@ -12,13 +12,6 @@
 ]).
 % -compile(export_all).
 
--record(robot, {
-    name,
-    type = industial,
-    hobbies,
-    details = []
-}).
--record(message, {sender, receiver, content}).
 % create() -> create("Mechtron", "R2D2", ["beeping", "whistling"]).
 first_robot() ->
     #robot{
@@ -44,7 +37,6 @@ send_message(Sender, Receiver, Content) ->
     io:format("Message details using pattern matching - Sender: ~p\n", [Sender1]),
     io:format("Message details using pattern matching - Receiver: ~p\n", [Receiver1]).
 
--record(user, {name, group, age}).
 % use pattern matching for fileter
 
 admin_panel(#user{name = Name, group = admin}) ->
