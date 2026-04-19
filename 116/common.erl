@@ -7,7 +7,8 @@
     send_message/3,
     admin_panel/1,
     adult_section/1,
-    driving_license/1
+    driving_license/1,
+    repairman/1
 ]).
 % -compile(export_all).
 
@@ -62,3 +63,10 @@ driving_license(#user{name = Name, age = Age}) when Age >= 16 ->
     io:format("Congratulations, ~p! You are eligible for a driving license.~n", [Name]);
 driving_license(#user{name = Name}) ->
     io:format("Sorry, ~p. You must be at least 16 years old to get a driving license.", [Name]).
+
+% update robot details
+
+repairman(Rob) ->
+    Details = Rob#robot.details,
+    NewRob = Rob#robot{details = ["Repaired by repairman" | Details]},
+    {repaired, NewRob}.
