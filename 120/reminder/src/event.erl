@@ -7,6 +7,7 @@
     name = "",
     to_go = 0
 }).
+
 start(EventName, Delay) ->
     spawn(?MODULE, init, [self(), EventName, Delay]).
 start_link(EventName, Delay) ->
@@ -32,6 +33,7 @@ loop(S = #state{server = Server, to_go = [T | Next]}) ->
                 loop(S#state{to_go = Next})
         end
     end.
+
 %%% event's innards
 init(Server, EventName, Delay) ->
     loop(#state{
