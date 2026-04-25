@@ -1,6 +1,6 @@
 -module(game).
 
--export([add_player/2, add_score/2, get_players/0, get_player/1, start_game/0, start/0]).
+-export([add_player/2, add_score/2, get_players/0, get_player/1, start_game/0, start/0, stop/0]).
 -record(player, {name, score}).
 -record(state, {players = []}).
 
@@ -25,9 +25,16 @@ get_players(State) ->
 get_player(State, Name) ->
     lists:filter(fun(Player) -> Player#player.name =:= Name end, State#state.players).
 start() ->
-    Pid = spawn(?MODULE, start_game, []),
-    io:format("Game started with PID: ~p~n", [Pid]),
-    register(mygame, Pid).
+    case whereis(mygame) of
+        undefined ->
+            Pid = spawn(?MODULE, start_game, []),
+
+            register(mygame, Pid),
+            io:format("Game started with PID: ~p~n", [Pid]),
+            {ok, Pid};
+        Pid ->
+            io:format("Game already running with PID: ~p~n", [Pid])
+    end.
 
 start_game() ->
     loop(#state{}).
@@ -70,3 +77,6 @@ add_player(Name, Score) ->
     mygame ! {add_player, Name, Score}.
 add_score(Name, Score) ->
     mygame ! {add_score, Name, Score}.
+
+stop() ->
+    mygame ! stop.
