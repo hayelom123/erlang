@@ -33,13 +33,15 @@ start_game() ->
     loop(#state{}).
 
 loop(State) ->
-    io:format("Current Players: ~p~n", [State#state.players]),
+    % io:format("Current Players: ~p~n", [State#state.players]),
     receive
         {add_player, Name, Score} ->
             NewState = add_player_to_state(State, #player{name = Name, score = Score}),
+            io:format("Player added: ~s with score ~p~n", [Name, Score]),
             loop(NewState);
         {add_score, Name, Score} ->
             NewState = add_score(State, Name, Score),
+            io:format("Score added to ~s: ~p~n", [Name, Score]),
             loop(NewState);
         {get_players, Caller} ->
             Caller ! {players, get_players(State)},
