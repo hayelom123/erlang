@@ -1,14 +1,22 @@
 -module(game_sup).
 
--export([start/0, loop/0]).
+-export([start/0, init/0]).
 
 start() ->
-    Pid = spawn(?MODULE, loop, []),
-    register(game_sup, Pid),
-    {ok, Pid}.
+    case whereis(game_sup) of
+        undefined ->
+            Pid = spawn(?MODULE, init, []),
+            register(game_sup, Pid),
+            {ok, Pid};
+        Pid ->
+            io:format("Game supervisor already running with PID: ~p~n", [Pid]),
+            {ok, Pid}
+    end.
 
-loop() ->
+init() ->
     process_flag(trap_exit, true),
+    loop().
+loop() ->
     case whereis(mygame) of
         undefined ->
             Pid = spawn(game, start_game, []),
