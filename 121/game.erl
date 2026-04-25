@@ -1,6 +1,8 @@
 -module(game).
 
--export([add_player/2, add_score/2, get_players/0, get_player/1, start_game/0, start/0, stop/0]).
+-export([
+    add_player/2, add_score/2, get_players/0, get_player/1, start_game/0, start/0, stop/0, crash/0
+]).
 -record(player, {name, score}).
 -record(state, {players = []}).
 
@@ -28,12 +30,12 @@ start() ->
     case whereis(mygame) of
         undefined ->
             Pid = spawn(?MODULE, start_game, []),
-
             register(mygame, Pid),
             io:format("Game started with PID: ~p~n", [Pid]),
             {ok, Pid};
         Pid ->
-            io:format("Game already running with PID: ~p~n", [Pid])
+            io:format("Game already running with PID: ~p~n", [Pid]),
+            Pid
     end.
 
 start_game() ->
@@ -58,6 +60,9 @@ loop(State) ->
             loop(State);
         stop ->
             io:format("Game stopped.~n");
+        {crash} ->
+            io:format("💥 Game is crashing now!~n"),
+            exit(simulated_crash);
         _ ->
             io:format("Unknown message received.~n"),
             loop(State)
@@ -80,3 +85,5 @@ add_score(Name, Score) ->
 
 stop() ->
     mygame ! stop.
+crash() ->
+    mygame ! {crash}.
