@@ -27,7 +27,7 @@ handleClient(Client) ->
                     send_response(Client, 400, <<"Bad Request">>);
                 Parsed ->
                     %% Successfully parsed - log and respond
-                    #{method := Method, path := Path, headers := Headers} = Parsed,
+                    #{method := Method, path := Path} = Parsed,
                     io:format("Received ~s request for ~s~n", [Method, Path]),
                     % io:format("Headers: ~p~n", [Headers]),
 
