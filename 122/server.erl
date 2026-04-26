@@ -1,44 +1,3 @@
-% -module(server).
-% -export([start/0]).
-
-% start() ->
-%     {ok, Socket} = gen_tcp:listen(8080, [
-%         binary,
-%         {packet, 0},
-%         {active, false},
-%         {reuseaddr, true}
-%     ]),
-%     io:format("Server listening on port http://localhost:8080~n"),
-%     accept(Socket).
-
-% accept(Socket) ->
-%     {ok, Client} = gen_tcp:accept(Socket),
-%     io:format("Client connected: ~p~n", [Client]),
-%     spawn(fun() -> handleClient(Client) end),
-%     accept(Socket).
-
-% handleClient(Client) ->
-%     case gen_tcp:recv(Client, 0) of
-%         {ok, Data} ->
-
-%             % % io:format("Received data: ~p~n", [Data]),
-%             % % Request = http_parser:parse(Data),
-%             % #{method := Method, path := Path, version := Version} = http_parser:parse(Data),
-%             % % {method = Method, path = Path, version = Version, _} =
-%             % %     Request,
-%             % % io:format("Parsed request: ~p~n", [Request]),
-%             % io:format("📬 Received ~s request for ~s with version ~s~n", [Method, Path, Version]),
-%             % gen_tcp:send(
-%             %     Client, <<"HTTP/1.1 200 OK\r\nContent-Type: text/plain\r\n\r\nHello from Erlang!">>
-%             % ),
-%             gen_tcp:close(Client);
-%         {error, closed} ->
-%             io:format("Client disconnected: ~p~n", [Client]);
-%         {error, Reason} ->
-%             io:format("Error receiving data from client ~p: ~p~n", [Client, Reason])
-%     end,
-%     gen_tcp:close(Client).
-
 -module(server).
 -export([start/0]).
 
@@ -77,6 +36,8 @@ handleClient(Client) ->
                         case Path of
                             "/hello" -> <<"Hello, World!">>;
                             "/time" -> integer_to_binary(erlang:system_time(second));
+                            % Placeholder for dynamic route
+                            "/game/:id" -> <<"Game details for ID: ">>;
                             _ -> <<"Hello from Erlang!">>
                         end,
                     send_response(Client, 200, ResponseBody)
