@@ -29,7 +29,7 @@ handleClient(Client) ->
                     %% Successfully parsed - log and respond
                     #{method := Method, path := Path, headers := Headers} = Parsed,
                     io:format("Received ~s request for ~s~n", [Method, Path]),
-                    io:format("Headers: ~p~n", [Headers]),
+                    % io:format("Headers: ~p~n", [Headers]),
 
                     %% Simple routing example
                     ResponseBody =
